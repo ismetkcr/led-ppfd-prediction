@@ -262,9 +262,9 @@ h1(doc, "4. Veri Seti")
 h2(doc, "4.1 LED Tipleri ve Ozellikleri")
 simple_table(doc,
     ["LED Tipi", "LED Sayisi", "Uzunluk", "Maliyet"],
-    [("Quantum LED", "120", "100 cm", "2.200 USD"),
-     ("12V LED",     "144", "100 cm",   "550 USD"),
-     ("54V LED",      "72", "100 cm",   "850 USD")],
+    [("Quantum LED", "120", "100 cm", "2.200 TL"),
+     ("12V LED",     "144", "100 cm",   "550 TL"),
+     ("54V LED",      "72", "100 cm",   "850 TL")],
     col_widths_in=[1.8, 1.2, 1.2, 1.2],
     header_fill='1F497D',
     row_fills=['D9E8F5', 'EBF3FB', 'D9E8F5']
@@ -480,6 +480,27 @@ simple_table(doc,
     header_fill='2E75B6'
 )
 body(doc, "Calistirmak icin: python new_led_visualization_gui.py", italic=True)
+
+h2(doc, "9.1 Ozel LED Duzeni Ekran Goruntuleri")
+SHOTS = os.path.join(BASE, 'screenshots')
+
+_s3layout = os.path.join(SHOTS, 'custom_layout_3leds.png')
+_s3heat   = os.path.join(SHOTS, 'custom_layout_heat_map_3_leds.png')
+_s5layout = os.path.join(SHOTS, 'custom_layout_5_led.png')
+_s5heat   = os.path.join(SHOTS, 'custom_layout_5_led_heat_map.png')
+_s3stats  = os.path.join(SHOTS, 'custom_layout_3_led_statistics.png')
+
+if os.path.exists(_s3layout) and os.path.exists(_s3heat):
+    insert_two_images(doc, _s3layout, _s3heat,
+                      cap1='3x 54V LED kurulum duzeni',
+                      cap2='3 LED PPFD isi haritasi')
+if os.path.exists(_s5layout) and os.path.exists(_s5heat):
+    insert_two_images(doc, _s5layout, _s5heat,
+                      cap1='5 LED karisik kurulum (Quantum + 54V)',
+                      cap2='5 LED PPFD dagilimi')
+if os.path.exists(_s3stats):
+    insert_image(doc, _s3stats, width_in=5.5,
+                 caption='Istatistik paneli — 3x 54V LED kurulumu')
 
 # ── SECTION 10: TEKNOLOJILER ──────────────────────────────────────────────────
 

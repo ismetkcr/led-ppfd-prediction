@@ -12,7 +12,7 @@
 
 ## Demo
 
-![Demo Video](video_materials/light_short.mp4)
+<video src="video_materials/light_short.mp4" controls width="100%"></video>
 
 > Video çalışmıyorsa: [video_materials/light_short.mp4](video_materials/light_short.mp4)
 
@@ -27,8 +27,8 @@ ile tarafımdan toplanmıştır. Her yükseklikte 15 farklı ölçüm noktasınd
 |:---:|:---:|
 | ![Kurulum uzak](video_materials/sistem_uzak.jpeg) | ![LED yakın](video_materials/mor_kullan.jpeg) |
 | *Genel kurulum görünümü* | *Quantum LED (mor spektrum)* |
-| ![Ölçüm düzlemi](video_materials/duzlem_kullan.jpeg) | ![WhatsApp Image 2025-12-14 at 21.01.45.jpeg](video_materials/WhatsApp%20Image%202025-12-14%20at%2021.01.45.jpeg) |
-| *15 ölçüm noktası yerleşimi* | *Sensör ve ölçüm kurulumu* |
+| ![Ölçüm düzlemi](video_materials/duzlem_kullan.jpeg) | ![Sensör kurulumu](video_materials/WhatsApp%20Image%202025-12-14%20at%2021.01.45.jpeg) |
+| *15 ölçüm noktası düzlemi* | *PAR sensör ve ölçüm kurulumu* |
 
 ---
 
@@ -72,9 +72,9 @@ ve konumda oluşan PPFD değeridir.
 
 | LED Tipi | LED Sayısı | Uzunluk | Maliyet |
 |----------|-----------|---------|---------|
-| **Quantum** | 120 | 100 cm | 2.200 USD |
-| **12V** | 144 | 100 cm | 550 USD |
-| **54V** | 72 | 100 cm | 850 USD |
+| **Quantum** | 120 | 100 cm | 2.200 ₺ |
+| **12V** | 144 | 100 cm | 550 ₺ |
+| **54V** | 72 | 100 cm | 850 ₺ |
 
 ### Ölçüm Konfigürasyonu
 
@@ -114,13 +114,12 @@ Rᵢ = √[(x−xᵢ)² + (y−yᵢ)² + h²]
 
 ### Optimizasyon
 
-θ₁ için analitik kapalı form çözüm kullanılır:
+θ₁ için analitik kapalı form çözüm:
 ```
 θ₁_opt = (S · PPFD_measured) / (S · S)
 ```
 
-İki farklı α araması:
-- **Grid Search** — [0.001, 1.0] aralığında 500 eşit aralıklı nokta
+- **Grid Search** — [0.001, 1.0] aralığında 500 nokta
 - **Golden Section Search** — Scipy `minimize_scalar`, tolerans: 1×10⁻¹²
 
 ### Sonuçlar
@@ -224,15 +223,6 @@ h (yükseklik)
 > Bu sayede model; farklı LED orientasyonları, çoklu lamba kurulumları
 > ve farklı LED sayıları ile yeniden kullanılabilir.
 
-### Eğitim
-
-| Parametre | Değer |
-|-----------|-------|
-| Learning rate | 0.0005 |
-| Epoch | 5000 |
-| Batch size | 4 |
-| Eğitim verisi | 13 cm + 27 cm + 35 cm (tüm yükseklikler) |
-
 ### Sonuçlar
 
 **Quantum LED — Tüm Yüksekliklerde:**
@@ -249,19 +239,17 @@ h (yükseklik)
 ![PINN Scatter](results/pinn_scatter.png)
 *PINN Scatter grafikleri — Tahmin edilen vs Ölçülen PPFD*
 
-**Kaydedilen Modeller (Tüm LED Tipleri):**
+**Kaydedilen Modeller:**
 
-| LED | R² | RMSE |
-|-----|----|------|
-| Quantum | 0.9781 | 10.44 µmol/m²/s |
-| 12V | 0.9546 | 4.01 µmol/m²/s |
-| 54V | 0.9793 | 6.53 µmol/m²/s |
-
-**Öğrenilen parametre:** Quantum LED için α = 0.0428 cm⁻¹
+| LED | R² | RMSE | Maliyet |
+|-----|----|------|---------|
+| Quantum | 0.9781 | 10.44 µmol/m²/s | 2.200 ₺ |
+| 12V | 0.9546 | 4.01 µmol/m²/s | 550 ₺ |
+| 54V | 0.9793 | 6.53 µmol/m²/s | 850 ₺ |
 
 **Değerlendirme:**
 - ✅ Yüksek R² tüm yüksekliklerde
-- ✅ Fiziksel parametreler yorumlanabilir
+- ✅ Fiziksel parametreler yorumlanabilir (α = 0.0428 cm⁻¹)
 - ✅ Farklı LED konfigürasyonlarına genelleştirilebilir
 - ✅ Az veriyle iyi performans (fizik denklemi kısıt sağlıyor)
 
@@ -294,11 +282,31 @@ Tkinter tabanlı interaktif masaüstü uygulaması — 5 sekme:
 | **PINN Tahmini** | A(h) & α grafikleri, model kaydet/yükle, tahmin aracı |
 | **Özel LED Düzeni** | Özel LED konfigürasyonu, çoklu lamba simülasyonu |
 
+### Özel LED Düzeni Sekmesi
+
+Farklı LED tiplerini (Quantum, 12V, 54V) karıştırarak özel kurulumlar tasarlanabilir.
+PINN modeli, LED konumları dışsal parametre olduğundan herhangi bir konfigürasyona uygulanabilir.
+
+| | |
+|:---:|:---:|
+| ![3 LED Kurulum](screenshots/custom_layout_3leds.png) | ![3 LED Isı Haritası](screenshots/custom_layout_heat_map_3_leds.png) |
+| *3× 54V LED kurulum düzeni* | *3 LED PPFD ısı haritası* |
+| ![5 LED Kurulum](screenshots/custom_layout_5_led.png) | ![5 LED Isı Haritası](screenshots/custom_layout_5_led_heat_map.png) |
+| *5 LED karışık kurulum (Quantum + 54V)* | *5 LED PPFD dağılımı — daha yüksek ve düzgün* |
+
+![İstatistikler](screenshots/custom_layout_3_led_statistics.png)
+*3× 54V LED istatistik paneli*
+
+**İstatistik karşılaştırması:**
+
+| Kurulum | Ort. PPFD | Min | Max | CV (Düzgünlük) |
+|---------|-----------|-----|-----|----------------|
+| 3× 54V LED | 88.46 µmol/m²/s | 37.94 | 138.07 | %30.17 |
+| 2× Quantum + 3× 54V | ~daha yüksek | — | 280.3 | daha düzgün |
+
 ```bash
 python new_led_visualization_gui.py
 ```
-
-> GUI ekran görüntüleri yakında eklenecek.
 
 ---
 
@@ -348,7 +356,6 @@ light_last/
 ├── create_report.py                      # Word raporu oluşturma
 ├── LED_PPFD_Project_Report.docx          # Türkçe proje raporu
 ├── README.md
-├── DEVELOPMENT_NOTES.md
 │
 ├── idx_to_points.csv                     # 15 ölçüm noktası (x, y koordinatları)
 ├── 13_cm_led_height_ppfd_values.csv      # PPFD ölçümleri — 13 cm
@@ -366,12 +373,19 @@ light_last/
 │   ├── pinn_measured_vs_predicted.png
 │   └── pinn_scatter.png
 │
+├── screenshots/
+│   ├── custom_layout_3leds.png
+│   ├── custom_layout_heat_map_3_leds.png
+│   ├── custom_layout_3_led_statistics.png
+│   ├── custom_layout_5_led.png
+│   └── custom_layout_5_led_heat_map.png
+│
 └── video_materials/
-    ├── light_short.mp4                   # Kısa demo videosu
-    ├── sistem_uzak.jpeg                  # Genel kurulum görünümü
-    ├── mor_kullan.jpeg                   # Quantum LED yakın çekim
-    ├── duzlem_kullan.jpeg                # Ölçüm noktaları düzlemi
-    └── sensor_yakın_kullan.jpeg          # PAR sensör yakın çekim
+    ├── light_short.mp4                   # Demo videosu
+    ├── sistem_uzak.jpeg
+    ├── mor_kullan.jpeg
+    ├── duzlem_kullan.jpeg
+    └── sensor_yakın_kullan.jpeg
 ```
 
 ---
@@ -388,7 +402,6 @@ light_last/
 | **SciPy** | Golden Section Search optimizasyonu |
 | **Tkinter** | GUI arayüzü |
 | **h5py** | Model ağırlıkları okuma/yazma |
-| **python-docx** | Word raporu oluşturma |
 
 ---
 
