@@ -94,6 +94,23 @@ Quantum LED — Yükseklik Offseti:
 > Veri, **Apogee Instruments Quantum PAR sensörü** ile tarafımdan deneysel olarak
 > toplanmıştır. Her yükseklik–konum kombinasyonu için tekrarlı ölçüm yapılmıştır.
 
+### Ölçüm Verisi Görselleştirmesi
+
+Gerçek ölçüm noktalarındaki PPFD değerleri, interpolasyon ile ısı haritası olarak görselleştirilmiştir.
+Her kutu bir ölçüm noktasını, içindeki değer ise ölçülen PPFD'yi (µmol/m²/s) göstermektedir.
+
+**Quantum LED — 3 Yükseklik Karşılaştırması**
+
+![Quantum LED Ölçüm Isı Haritası](results/measurement_heatmap_quantum.png)
+
+**Tüm LED Tipleri — 13 cm Yükseklik**
+
+![13 cm Yükseklik Karşılaştırması](results/measurement_heatmap_h13cm.png)
+
+**Tüm LED ve Yükseklik Kombinasyonları (3×3 Özet)**
+
+![Tüm Ölçüm Isı Haritaları](results/measurement_heatmap_all.png)
+
 ---
 
 ## Model 1: Lineer Regresyon (Üstel Bozunma)

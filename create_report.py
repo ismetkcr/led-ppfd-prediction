@@ -283,6 +283,28 @@ simple_table(doc,
 )
 body(doc, "PPFD donusumu: Ham olcum x 0.8 = gercek PPFD (aralik: 4 - 326.4 umol/m2/s)", italic=True)
 
+h2(doc, "4.3 Olcum Verisi Gorsellestirmesi")
+body(doc, (
+    "Asagidaki isi haritalari gercek olcum noktalarindaki PPFD degerlerini gostermektedir. "
+    "Her kutu bir olcum noktasini, icerisindeki deger o noktadaki PPFD'yi (umol/m2/s) temsil eder. "
+    "Arka plan rengi scipy griddata interpolasyonu ile olusturulmustur."
+))
+
+_hq = os.path.join(RESULTS, 'measurement_heatmap_quantum.png')
+if os.path.exists(_hq):
+    insert_image(doc, _hq, width_in=6.2,
+                 caption='Quantum LED -- Uclu Yukseklik Karsilastirmasi (Olculen PPFD Dagilimi)')
+
+_h13 = os.path.join(RESULTS, 'measurement_heatmap_h13cm.png')
+if os.path.exists(_h13):
+    insert_image(doc, _h13, width_in=6.2,
+                 caption='Tum LED Tipleri -- 13 cm Yukseklik (Olculen PPFD Karsilastirmasi)')
+
+_hall = os.path.join(RESULTS, 'measurement_heatmap_all.png')
+if os.path.exists(_hall):
+    insert_image(doc, _hall, width_in=6.5,
+                 caption='Tum LED Tipleri x Tum Yukseklikler -- PPFD Olcum Ozeti (3x3)')
+
 # ── SECTION 5: LINEER REGRESYON ───────────────────────────────────────────────
 
 h1(doc, "5. Model 1 -- Lineer Regresyon (Ustel Bozunma)")
