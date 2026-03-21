@@ -82,10 +82,11 @@ def make_panel(ax, x, y, values, title, led_color, h_nominal):
     # Overlay measured value boxes
     box_w, box_h = 16, 10
     for xi, yi, vi in zip(x, y, values):
-        # Determine text colour based on intensity
         norm_v = (vi - vmin) / (vmax - vmin + 1e-9)
-        txt_col = 'white' if norm_v > 0.55 else '#3E2000'
-        bg_col  = plt.cm.ScalarMappable(cmap=cmap).to_rgba(norm_v)
+        bg_col = cmap(norm_v)           # directly query colormap — reliable RGBA
+        r, g, b, _ = bg_col
+        luminance = 0.299*r + 0.587*g + 0.114*b
+        txt_col = 'white' if luminance < 0.55 else '#2B1200'
 
         rect = patches.FancyBboxPatch(
             (xi - box_w/2, yi - box_h/2), box_w, box_h,
